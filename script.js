@@ -82,19 +82,25 @@ function creer_liste() {
 	const ma_liste_ul = document.createElement('ul');
 	const mon_input = document.createElement('input'); //7-a
 	const mon_bouton = document.createElement('button'); //7-b
+	const btn_effacer = document.createElement('span'); //18-a
+	const unique_id = new Date().getTime(); //18-d pour remplacer mes_listes.length (car pb en cas de suppression)
 
+	ma_section.setAttribute('id', 'section_' + unique_id); //18-f id dynamique
+	btn_effacer.textContent = '🚮'; //18-b ajout emoji
 	//4-b ==> 6-a
 	// mon_titre.textContent = 'Ma liste' + (mes_listes.length + 1);
 	mon_titre.textContent = input_nom.value;
-	ma_liste_ul.setAttribute('id', 'liste_ul_' + mes_listes.length); //9-b id dynamique
+	btn_effacer.setAttribute('id', 'effacer_ul_' + unique_id); //18-e id dynamique
+	ma_liste_ul.setAttribute('id', 'liste_ul_' + unique_id); //9-b id dynamique
 	mon_input.setAttribute('placeholder', 'Item à ajouter'); //8-b
 	mon_input.setAttribute('type', 'text'); //8-a
-	mon_input.setAttribute('id', 'nom_item_' + mes_listes.length); //8-c id dynamique
+	mon_input.setAttribute('id', 'nom_item_' + unique_id); //8-c id dynamique
 	mon_bouton.setAttribute('type', 'button'); //8-d
-	mon_bouton.setAttribute('id', 'bouton_item_' + mes_listes.length); //8-e id dynamique
+	mon_bouton.setAttribute('id', 'bouton_item_' + unique_id); //8-e id dynamique
 	mon_bouton.textContent = 'Ajouter un élément'; //8-f
 	//4-c
 	ma_section.appendChild(mon_titre);
+	ma_section.appendChild(btn_effacer); //18-e bis
 	ma_section.appendChild(ma_liste_ul);
 	ma_section.appendChild(mon_input); //7-c
 	ma_section.appendChild(mon_bouton); //7-d
@@ -102,6 +108,7 @@ function creer_liste() {
 	conteneur.appendChild(ma_section);
 
 	mon_bouton.addEventListener('click', ajouter_element); //11-Cible le bouton de façon dynamique
+	btn_effacer.addEventListener('click', effacer_liste); //18-c
 
 	mes_listes.push(ma_section);
 	input_nom.value = ''; //6-b on vide l'input
@@ -126,7 +133,7 @@ function ajouter_element(event) {
 
 	nouvel_box.setAttribute('type', 'checkbox'); //On attribut un type checkbox
 	nouveau_label.textContent = input_cible.value; //10-b On injecte la valeur de l'input dans le label
-	nouveau_span.textContent = 'effacer'; //16-c on injecte la valeur de l'input dans le span
+	nouveau_span.textContent = '🚮'; //16-c on injecte la valeur de l'input dans le span
 
 	nouvel_box.setAttribute('id', 'checkbox_' + unique_id); //14-c Add id unique à la checkbox choisie
 	nouveau_label.setAttribute('id', 'label_' + unique_id); //14-d Add id au label 14-c
@@ -135,6 +142,7 @@ function ajouter_element(event) {
 
 	nouvel_item.appendChild(nouvel_box);
 	nouvel_item.appendChild(nouveau_label);
+	nouvel_item.appendChild(nouveau_span); //16-e on ajoute (affiche) le span à l'elts li
 	ul_cible.appendChild(nouvel_item); //10-c
 	input_cible.value = ''; //12-on vide l'input
 	//14-on add un ecouteur d'event sur le changement ou non de la checkbox (soit on détecte le click ou soit le changement de valeur)
@@ -145,7 +153,7 @@ function ajouter_element(event) {
 
 //14-a
 const item_clicked = (event) => {
-	console.log(event); //14-b vérifie que l'event est bien détecté (qd on coche ou décoche la checkbox)
+	//console.log(event); //14-b vérifie que l'event est bien détecté (qd on coche ou décoche la checkbox)
 	const checkbox_id = event.target.id; //14-f récupère l'id de la checkbox
 	const id_cible = checkbox_id.split('_')[1]; //14-g récupère l'id de la checkbox
 	const label_cible = document.getElementById('label_' + id_cible); //14-h récupère le label correspondant à la checkbox
@@ -158,4 +166,21 @@ const item_clicked = (event) => {
 	}
 };
 //17-
-const item_deleted = (event) => {};
+const item_deleted = (event) => {
+	//console.log(event); //17-a vérifie que l'event est bien détecté (qd on clique sur le span)
+	const span_id = event.target.id; //17-b récupère l'id du span
+	const id_cible = span_id.split('_')[1]; //17-c récupère l'id du span
+	const li_cible = document.getElementById('li_' + id_cible); //17-d récupère l'elts li correspondant au span
+	//console.log(li_cible); //17-a bis
+	li_cible.remove(); //17-e supprime l'elts li
+};
+
+//18-d
+const effacer_liste = (event) => {
+	//console.log(event); //18-e vérifie que l'event est bien détecté (qd on clique sur le btn)
+	const effacer_id = event.target.id; //18-g récupère l'id du btn
+	const id_cible = effacer_id.split('_')[2]; //18-h récupère l'id du btn
+	const section_cible = document.getElementById('section_' + id_cible); //18-i récupère l'elts ul correspondant au btn
+	//console.log(ul_cible); //18-j
+	section_cible.remove(); //18-k vide l'elts section
+};
