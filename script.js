@@ -91,6 +91,7 @@ function creer_liste() {
 	// mon_titre.textContent = 'Ma liste' + (mes_listes.length + 1);
 	mon_titre.textContent = input_nom.value;
 	btn_effacer.setAttribute('id', 'effacer_ul_' + unique_id); //18-e id dynamique
+	btn_effacer.className = 'effacer_section'; //19-a
 	ma_liste_ul.setAttribute('id', 'liste_ul_' + unique_id); //9-b id dynamique
 	mon_input.setAttribute('placeholder', 'Item à ajouter'); //8-b
 	mon_input.setAttribute('type', 'text'); //8-a
@@ -99,8 +100,8 @@ function creer_liste() {
 	mon_bouton.setAttribute('id', 'bouton_item_' + unique_id); //8-e id dynamique
 	mon_bouton.textContent = 'Ajouter un élément'; //8-f
 	//4-c
-	ma_section.appendChild(mon_titre);
 	ma_section.appendChild(btn_effacer); //18-e bis
+	ma_section.appendChild(mon_titre);
 	ma_section.appendChild(ma_liste_ul);
 	ma_section.appendChild(mon_input); //7-c
 	ma_section.appendChild(mon_bouton); //7-d
@@ -134,6 +135,7 @@ function ajouter_element(event) {
 	nouvel_box.setAttribute('type', 'checkbox'); //On attribut un type checkbox
 	nouveau_label.textContent = input_cible.value; //10-b On injecte la valeur de l'input dans le label
 	nouveau_span.textContent = '🚮'; //16-c on injecte la valeur de l'input dans le span
+	nouveau_span.className = 'effacer_item'; //19-b on ajoute une classe au span (19-a = css)
 
 	nouvel_box.setAttribute('id', 'checkbox_' + unique_id); //14-c Add id unique à la checkbox choisie
 	nouveau_label.setAttribute('id', 'label_' + unique_id); //14-d Add id au label 14-c
@@ -165,6 +167,7 @@ const item_clicked = (event) => {
 		label_cible.className = '';
 	}
 };
+
 //17-
 const item_deleted = (event) => {
 	//console.log(event); //17-a vérifie que l'event est bien détecté (qd on clique sur le span)

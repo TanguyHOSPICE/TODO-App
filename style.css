@@ -1,7 +1,30 @@
 section {
 	border: 1px solid blue;
+	position: relative; /*etape 19-js*/
+}
+h1 {
+	text-align: center;
+	margin-top: 5px;
+}
+ul {
+	list-style: none;
+}
+input[type='checkbox'] {
+	margin-right: 10px;
+}
+label {
+	margin-right: 20px;
 }
 .line_through {
 	text-decoration: line-through;
 	color: #7f7f7f;
+}
+.effacer_section {
+	position: absolute; /*etape 19-js*/
+	top: 0;
+	right: 0;
+}
+.effacer_section:hover,
+.effacer_item:hover {
+	cursor: pointer;
 }
