@@ -121,25 +121,34 @@ function ajouter_element(event) {
 	const nouvel_item = document.createElement('li'); //10-a
 	const nouvel_box = document.createElement('input');
 	const nouveau_label = document.createElement('label');
+	const nouveau_span = document.createElement('span'); //16-a on crée un span(inline)
+	const unique_id = new Date().getTime(); //14-e Affecte un id en déterminant la date du jour et récupérant l'heure en ms
 
 	nouvel_box.setAttribute('type', 'checkbox'); //On attribut un type checkbox
-	nouvel_box.setAttribute('id', 'checkbox_AAA'); //14-c Add id unique à la checkbox choisie
 	nouveau_label.textContent = input_cible.value; //10-b On injecte la valeur de l'input dans le label
-	nouveau_label.setAttribute('id', 'label_AAA'); //14-d Add id au label 14-c
+	nouveau_span.textContent = 'effacer'; //16-c on injecte la valeur de l'input dans le span
+
+	nouvel_box.setAttribute('id', 'checkbox_' + unique_id); //14-c Add id unique à la checkbox choisie
+	nouveau_label.setAttribute('id', 'label_' + unique_id); //14-d Add id au label 14-c
+	nouvel_item.setAttribute('id', 'li_' + unique_id); //16-on donne un id à l'elts li
+	nouveau_span.setAttribute('id', 'span_' + unique_id); //16-b on donne le même id au span que celui de l'elts li
+
 	nouvel_item.appendChild(nouvel_box);
 	nouvel_item.appendChild(nouveau_label);
 	ul_cible.appendChild(nouvel_item); //10-c
 	input_cible.value = ''; //12-on vide l'input
 	//14-on add un ecouteur d'event sur le changement ou non de la checkbox (soit on détecte le click ou soit le changement de valeur)
 	nouvel_box.addEventListener('change', item_clicked);
+	//16-d on ajoute un écouteur d'event sur le span
+	nouveau_span.addEventListener('click', item_deleted);
 }
 
 //14-a
 const item_clicked = (event) => {
 	console.log(event); //14-b vérifie que l'event est bien détecté (qd on coche ou décoche la checkbox)
-	const checkbox_id = event.target.id; //14-e récupère l'id de la checkbox
-	const id_cible = checkbox_id.split('_')[1]; //14-f récupère l'id de la checkbox
-	const label_cible = document.getElementById('label_' + id_cible); //14-g récupère le label correspondant à la checkbox
+	const checkbox_id = event.target.id; //14-f récupère l'id de la checkbox
+	const id_cible = checkbox_id.split('_')[1]; //14-g récupère l'id de la checkbox
+	const label_cible = document.getElementById('label_' + id_cible); //14-h récupère le label correspondant à la checkbox
 	//15- On test la checkbox
 	if (event.target.checked) {
 		label_cible.className = 'line_through'; //15-a si la checkbox est cochée on ajoute ou retire une classe au label => .line_through en CSS
@@ -148,3 +157,5 @@ const item_clicked = (event) => {
 		label_cible.className = '';
 	}
 };
+//17-
+const item_deleted = (event) => {};
