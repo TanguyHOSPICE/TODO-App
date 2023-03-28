@@ -1,3 +1,7 @@
 section {
 	border: 1px solid blue;
 }
+.line_through {
+	text-decoration: line-through;
+	color: #7f7f7f;
+}
